@@ -68,27 +68,27 @@ const bulidMenu = (sections) => {
 bulidMenu(sections);
 
 // Add class 'active' to section when near top of viewport
-const sectionTop = section.offsetTop;
-const sectionHeight = section.clientHeight;
 window.addEventListener('scroll', () => {
-   elementsArray.forEach((sections) => {
-
-      if (window.pageYOffset >= sectionTop) {
-         current = section.getAttribute('id');
-      }
+   let current = '';
+   sections.forEach(section => {
+       const sectionTop = section.offsetTop;
+       if (window.pageYOffset >= sectionTop) {
+           current = section.getAttribute('id');
+       }
    })
-   elementsArray.forEach(function (event, index) {
-      if (event.classList.contains(currentView)) {
-         sections[index].classList.add('your-active-class')
-      }
-      else {
-         sections[index].classList.remove('your-active-class')
-      }
+   elementsArray.forEach(function (event, i) {
+       if (event.classList.contains(current)) {
+           sections[i].classList.add('your-active-class')
+       }
+       else {
+           sections[i].classList.remove('your-active-class')
+       }
    })
 })
 
+
 // Scroll to anchor ID using scrollTO event
-elementsArray.forEach(function (event, index) {
+elementsArray.forEach(function (event, i) {
    // Hover is turned on when mouse is over the element
    event.addEventListener("mouseover", function () {
       event.classList.add('hover');
@@ -99,7 +99,7 @@ elementsArray.forEach(function (event, index) {
    });
    // Event listener when click 
    event.addEventListener("click", function () {
-      sections[index].scrollIntoView({ behavior: "smooth" });
+      sections[i].scrollIntoView({ behavior: "smooth" });
    });
 });
 
