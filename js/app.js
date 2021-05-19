@@ -13,11 +13,7 @@
  * 
 */
 
-/**
- * Define Global Variables
- * 
-*/
-
+// ===> Global Variables <===
 // List of sections selected
 const sections = document.querySelectorAll('section');
 
@@ -26,24 +22,6 @@ let unorderedList = document.querySelector('#navbar__list');
 
 // Array of sections with the appended a elements
 let elementsArray = [];
-
-const navLi = document.querySelectorAll('nav ul li');
-
-let currentView = '';
-
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
 
 // build the nav
 const bulidMenu = (sections) => {
@@ -67,45 +45,28 @@ const bulidMenu = (sections) => {
 
 bulidMenu(sections);
 
-// Add class 'active' to section when near top of viewport
+// Add class 'active' to section when near top of viewport 
+// Used getBoundingClientRect method for better performance
 window.addEventListener('scroll', () => {
    sections.forEach((section, index) => {
-       let bounds = section.getBoundingClientRect();
-       let sectionTop = bounds.top;
-       let sectionBot = bounds.bottom;
-       let sectionRight = bounds.right;
-       let sectionLeft = bounds.left;
-       let conditionsHeight = ((sectionBot >= 150) && (sectionTop <= (window.innerHeight || document.documentElement.clientHeight)));
-       let conditionsWidth = ((sectionRight >= 0) && (sectionLeft <= (window.innerHeight || document.documentElement.clientHeight)));
-       if (conditionsHeight && conditionsWidth) {
-           section.classList.add('your-active-class');
-           elementsArray[index].classList.add('active__anchor');
-       } else {
-           section.classList.remove('your-active-class');
-           elementsArray[index].classList.remove('active__anchor');
-       }
-   })
-})
-
+      let bounds = section.getBoundingClientRect();
+      let sectionTop = bounds.top + 650;
+      let sectionBot = bounds.bottom;
+      let condition = sectionTop >= 0 && sectionBot <= (window.innerHeight || document.documentElement.clientHeight);
+      if (condition) {
+         section.classList.add('your-active-class');
+         elementsArray[index].classList.add('active__anchor');
+      } else {
+         section.classList.remove('your-active-class');
+         elementsArray[index].classList.remove('active__anchor');
+      }
+   });
+});
 
 // Scroll to anchor ID using scrollTO event
 elementsArray.forEach(function (event, i) {
-   // Event listener when click 
+   // Event listener when click
    event.addEventListener("click", function () {
       sections[i].scrollIntoView({ behavior: "smooth" });
    });
 });
-
-/**
- * End Main Functions
- * Begin Events
- *
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
-
-
