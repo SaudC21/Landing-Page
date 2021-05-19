@@ -82,9 +82,10 @@ section {
     color: #000;
 }
 
+.active__anchor,
 .navbar__menu .menu__link:hover {
     background: #333;
-    color: #fff;
+    color: #fff !important;
     transition: ease 0.3s all;
 }
 

@@ -24,7 +24,7 @@ const sections = document.querySelectorAll('section');
 // ID of the ul element
 let unorderedList = document.querySelector('#navbar__list');
 
-// Array of sections with the appended li & a elements
+// Array of sections with the appended a elements
 let elementsArray = [];
 
 const navLi = document.querySelectorAll('nav ul li');
@@ -47,14 +47,14 @@ let currentView = '';
 
 // build the nav
 const bulidMenu = (sections) => {
-   sections.forEach((sections) => {
+   sections.forEach((section) => {
       // Creation of li & a Tags
       let liTag = document.createElement('li');
       let aTag = document.createElement('a');
 
       // Add class to the 'a' tag
       aTag.classList.add("menu__link");
-      aTag.textContent = sections.getAttribute('data-nav');
+      aTag.textContent = section.getAttribute('data-nav');
 
       // append a tag to li tag then append it to the ul tag
       liTag.appendChild(aTag);
@@ -69,19 +69,20 @@ bulidMenu(sections);
 
 // Add class 'active' to section when near top of viewport
 window.addEventListener('scroll', () => {
-   let current = '';
-   sections.forEach(section => {
-       const sectionTop = section.offsetTop;
-       if (window.pageYOffset >= sectionTop) {
-           current = section.getAttribute('id');
-       }
-   })
-   elementsArray.forEach(function (event, i) {
-       if (event.classList.contains(current)) {
-           sections[i].classList.add('your-active-class')
-       }
-       else {
-           sections[i].classList.remove('your-active-class')
+   sections.forEach((section, index) => {
+       let bounds = section.getBoundingClientRect();
+       let sectionTop = bounds.top;
+       let sectionBot = bounds.bottom;
+       let sectionRight = bounds.right;
+       let sectionLeft = bounds.left;
+       let conditionsHeight = ((sectionBot >= 150) && (sectionTop <= (window.innerHeight || document.documentElement.clientHeight)));
+       let conditionsWidth = ((sectionRight >= 0) && (sectionLeft <= (window.innerHeight || document.documentElement.clientHeight)));
+       if (conditionsHeight && conditionsWidth) {
+           section.classList.add('your-active-class');
+           elementsArray[index].classList.add('active__anchor');
+       } else {
+           section.classList.remove('your-active-class');
+           elementsArray[index].classList.remove('active__anchor');
        }
    })
 })
@@ -89,14 +90,6 @@ window.addEventListener('scroll', () => {
 
 // Scroll to anchor ID using scrollTO event
 elementsArray.forEach(function (event, i) {
-   // Hover is turned on when mouse is over the element
-   event.addEventListener("mouseover", function () {
-      event.classList.add('hover');
-   });
-   // Hover is turned off when mouse is out of the element
-   event.addEventListener("mouseout", function () {
-      event.classList.remove('hover');
-   });
    // Event listener when click 
    event.addEventListener("click", function () {
       sections[i].scrollIntoView({ behavior: "smooth" });
