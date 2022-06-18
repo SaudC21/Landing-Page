@@ -6,4 +6,4 @@ https://saudc21.github.io/Landing-Page/
 
 ## Author
 
-**Saud Al-Slimany**  - [Saud Al-Slimany](https://github.com/SaudC21)
+**Saud Al-Slimany**  - [Saud Al-Slimany](https://www.linkedin.com/in/saudalslimany/)
